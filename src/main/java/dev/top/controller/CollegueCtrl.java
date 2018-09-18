@@ -17,40 +17,38 @@ import dev.top.entities.AvisView;
 import dev.top.entities.CollegueView;
 import dev.top.service.CollegueService;
 
-@CrossOrigin //discussion entre deux ports/machines/protocoles différents (ici 4200 <-> 8080) => cas particulier du Js
+@CrossOrigin // discussion entre deux ports/machines/protocoles différents (ici 4200 <->
+	     // 8080) => cas particulier du Js
 @RestController()
 @RequestMapping("/collegues")
 public class CollegueCtrl {
 
-    
-    
     private CollegueService service;
-	public CollegueCtrl(CollegueService service) {
-		this.service = service;
-	}
 
-	@GetMapping
-	public ResponseEntity<List<CollegueView>> listerCollegues() {
+    public CollegueCtrl(CollegueService service) {
+	this.service = service;
+    }
 
-		return ResponseEntity.ok(service.findAllCollegue());
+    @GetMapping
+    public ResponseEntity<List<CollegueView>> listerCollegues() {
 
-	}
+	return ResponseEntity.ok(service.findAllCollegue());
 
-	@PostMapping
-	public ResponseEntity<?> creerCollegue(@RequestBody CollegueView collegueView) {
-		
-		this.service.send(collegueView);
-		return ResponseEntity.status(HttpStatus.CREATED).build();
-	}
-	
-	@PatchMapping("/{pseudo}")
-	public ResponseEntity<?> editeScoreCollegue(@RequestBody AvisView avisView, @PathVariable("pseudo") String pseudo) {
-		
-		this.service.editScore(avisView, pseudo);
-		return ResponseEntity.status(HttpStatus.CREATED).build();
-		
-	}
+    }
+
+    @PostMapping
+    public ResponseEntity<?> creerCollegue(@RequestBody CollegueView collegueView) {
+
+	this.service.send(collegueView);
+	return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PatchMapping("/{pseudo}")
+    public ResponseEntity<CollegueView> editeScoreCollegue(@RequestBody AvisView avisView,
+	    @PathVariable("pseudo") String pseudo) {
+
+	return ResponseEntity.ok(this.service.editScore(avisView, pseudo));
+
+    }
 
 }
-
-
