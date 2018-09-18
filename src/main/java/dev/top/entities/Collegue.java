@@ -13,21 +13,21 @@ public class Collegue {
     private Integer id;
     private String pseudo;
     private Integer score;
-    private String image;
+    private String photo;
     
-	public Collegue(String pseudo, Integer score, String image) {
+	public Collegue(String pseudo, Integer score, String photo) {
 
 		this.pseudo = pseudo;
 		this.score = score;
-		this.image = image;
+		this.photo = photo;
 	}
 
 	public Collegue() {
 	}
 
-//	public Integer getId() {
-//		return id;
-//	}
+	public Integer getId() {
+		return id;
+	}
 
 	public void setId(Integer id) {
 		this.id = id;
@@ -49,13 +49,15 @@ public class Collegue {
 		this.score = score;
 	}
 
-	public String getImage() {
-		return image;
+	public String getPhoto() {
+		return photo;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
+
+
 }
 
    

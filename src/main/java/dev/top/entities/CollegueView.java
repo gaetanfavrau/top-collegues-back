@@ -4,13 +4,13 @@ public class CollegueView {
 	
 	private String pseudo;
     private Integer score;
-    private String image;
+    private String photo;
     
 
-	public CollegueView(String pseudo, Integer score, String image) {
+	public CollegueView(String pseudo, Integer score, String photo) {
 		this.pseudo = pseudo;
 		this.score = score;
-		this.image = image;
+		this.photo = photo;
 	}
 	
 	public CollegueView() {
@@ -30,12 +30,15 @@ public class CollegueView {
 	public void setScore(Integer score) {
 		this.score = score;
 	}
-	public String getImage() {
-		return image;
+
+	public String getPhoto() {
+		return photo;
 	}
-	public void setImage(String image) {
-		this.image = image;
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
+
 	
 	
 

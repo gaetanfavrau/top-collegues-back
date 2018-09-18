@@ -14,7 +14,7 @@ public class Converters {
 		
 		collegueView.setPseudo(source.getPseudo());
 		collegueView.setScore(source.getScore());
-		collegueView.setImage(source.getImage());
+		collegueView.setPhoto(source.getPhoto());
 		
 		return collegueView;
 	};
@@ -25,7 +25,7 @@ public class Converters {
 		
 		collegue.setPseudo(source.getPseudo());
 		collegue.setScore(source.getScore());
-		collegue.setImage(source.getImage());
+		collegue.setPhoto(source.getPhoto());
 		
 		return collegue;
 	};

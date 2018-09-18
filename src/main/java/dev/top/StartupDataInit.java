@@ -5,16 +5,16 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import dev.top.entities.Collegue;
-import dev.top.repos.CollegueRepo;
+import dev.top.repository.CollegueRepo;
 
 @Component
 public class StartupDataInit {
 
-    private CollegueRepo versionRepo;
+    private CollegueRepo collegueRepo;
     
-    public StartupDataInit(CollegueRepo versionRepo) {
+    public StartupDataInit(CollegueRepo collegueRepo) {
 		super();
-		this.versionRepo = versionRepo;
+		this.collegueRepo = collegueRepo;
 	}
 
 
@@ -22,11 +22,11 @@ public class StartupDataInit {
 	@EventListener(ContextRefreshedEvent.class)
     public void init() {
 
-        if(this.versionRepo.count() <= 0) {
-            this.versionRepo.save(new Collegue("SpiderCochon", 666, "http://interactive.nydailynews.com/2016/05/simpsons-quiz/img/simp1.jpg"));
-            this.versionRepo.save(new Collegue("SpiderCochon", 666, "http://interactive.nydailynews.com/2016/05/simpsons-quiz/img/simp1.jpg"));
-            this.versionRepo.save(new Collegue("SpiderCochon", 666, "http://interactive.nydailynews.com/2016/05/simpsons-quiz/img/simp1.jpg"));
-            this.versionRepo.save(new Collegue("SpiderCochon", 666, "http://interactive.nydailynews.com/2016/05/simpsons-quiz/img/simp1.jpg"));
+        if(this.collegueRepo.count() <= 0) {
+            this.collegueRepo.save(new Collegue("SpiderCochon01", 666, "https://static.comicvine.com/uploads/square_medium/11/114183/5147870-homer_simpson_2006.png"));
+            this.collegueRepo.save(new Collegue("SpiderCochon02", 666, "https://static.comicvine.com/uploads/square_medium/11/114183/5147870-homer_simpson_2006.png"));
+            this.collegueRepo.save(new Collegue("SpiderCochon03", 666, "https://static.comicvine.com/uploads/square_medium/11/114183/5147870-homer_simpson_2006.png"));
+            this.collegueRepo.save(new Collegue("SpiderCochon04", 666, "https://static.comicvine.com/uploads/square_medium/11/114183/5147870-homer_simpson_2006.png"));
             
         }
 

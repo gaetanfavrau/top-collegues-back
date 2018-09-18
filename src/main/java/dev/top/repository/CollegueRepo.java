@@ -1,7 +1,11 @@
-package dev.top.repos;
+package dev.top.repository;
 
-import dev.top.entities.Collegue;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import dev.top.entities.Collegue;
+
 public interface CollegueRepo extends JpaRepository<Collegue, Integer> {
+
+	Collegue findByPseudo(String pseudo);	
+	
 }
