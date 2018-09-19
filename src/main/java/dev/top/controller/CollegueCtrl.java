@@ -1,6 +1,7 @@
 package dev.top.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.top.entities.AvisView;
-import dev.top.entities.CollegueView;
+import dev.top.controller.view.AvisView;
+import dev.top.controller.view.CollegueView;
+import dev.top.entities.Collegue;
 import dev.top.service.CollegueService;
+import dev.top.utils.Converters;
 
 @CrossOrigin // discussion entre deux ports/machines/protocoles différents (ici 4200 <->
 	     // 8080) => cas particulier du Js
-@RestController()
+@RestController()  // @Controller + @ResponseBody
 @RequestMapping("/collegues")
 public class CollegueCtrl {
 
@@ -32,22 +35,29 @@ public class CollegueCtrl {
     @GetMapping
     public ResponseEntity<List<CollegueView>> listerCollegues() {
 
-	return ResponseEntity.ok(service.findAllCollegue());
+	return ResponseEntity.ok(this.service.findAllCollegue().stream().map(col -> Converters.COLLEGUE_TO_COLLEGUE_VIEW.convert(col)).collect(Collectors.toList()));
 
     }
+    
+    
 
     @PostMapping
     public ResponseEntity<?> creerCollegue(@RequestBody CollegueView collegueView) {
 
-	this.service.send(collegueView);
-	return ResponseEntity.status(HttpStatus.CREATED).build();
+    	this.service.send(Converters.COLLEGUE_VIEW_TO_COLLEGUE.convert(collegueView));
+    	return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+    
+    
 
     @PatchMapping("/{pseudo}")
     public ResponseEntity<CollegueView> editeScoreCollegue(@RequestBody AvisView avisView,
 	    @PathVariable("pseudo") String pseudo) {
 
-	return ResponseEntity.ok(this.service.editScore(avisView, pseudo));
+		
+	Collegue collegueModifie = this.service.editScore(avisView, pseudo);
+
+	return ResponseEntity.ok(Converters.COLLEGUE_TO_COLLEGUE_VIEW.convert(collegueModifie));
 
     }
 

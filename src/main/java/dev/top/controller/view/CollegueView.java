@@ -1,4 +1,4 @@
-package dev.top.entities;
+package dev.top.controller.view;
 
 public class CollegueView {
 	
