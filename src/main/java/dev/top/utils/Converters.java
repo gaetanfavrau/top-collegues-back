@@ -3,6 +3,7 @@ package dev.top.utils;
 import org.springframework.core.convert.converter.Converter;
 
 import dev.top.controller.view.CollegueView;
+import dev.top.controller.view.DetailsCollegueView;
 import dev.top.entities.Collegue;
 
 
@@ -26,6 +27,22 @@ public interface Converters {
 		collRepo.setPhoto(source.getPhoto());
 
 		return collRepo;
+	};
+	
+	Converter<Collegue, DetailsCollegueView> COLLEGUE_TO_DETAILS_COLLEGUE = source -> {
+		
+		DetailsCollegueView detailsCollegueView = new DetailsCollegueView();
+		
+		detailsCollegueView.setAdresse(source.getAdresse());
+		detailsCollegueView.setEmail(source.getEmail());
+		detailsCollegueView.setNom(source.getNom());
+		detailsCollegueView.setPrenom(source.getPrenom());
+		detailsCollegueView.setPseudo(source.getPseudo());
+		detailsCollegueView.setScore(source.getScore());
+		detailsCollegueView.setPhoto(source.getPhoto());
+		
+		return detailsCollegueView;
+ 
 	};
 
 }

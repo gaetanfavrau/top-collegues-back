@@ -1,5 +1,6 @@
 package dev.top.entities;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,18 +13,39 @@ public class Collegue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String pseudo;
+    private String nom;
+    private String prenom;
+    private String email;
+    @Embedded
+    private Adresse adresse;
     private Integer score;
     private String photo;
     
-	public Collegue(String pseudo, Integer score, String photo) {
+    
+
+	public Collegue(String pseudo, String nom, String prenom, String email, Adresse adresse, Integer score, String photo) {
 
 		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.adresse = adresse;
 		this.score = score;
 		this.photo = photo;
 	}
-
+	
 	public Collegue() {
 	}
+	
+
+	public Adresse getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(Adresse adresse) {
+		this.adresse = adresse;
+	}
+
 
 	public Integer getId() {
 		return id;
@@ -56,6 +78,32 @@ public class Collegue {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
 
 
 }

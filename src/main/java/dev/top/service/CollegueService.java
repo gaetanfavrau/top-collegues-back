@@ -57,8 +57,13 @@ public class CollegueService {
 
 
 	public List<Collegue> findAllCollegue() {
-
+		
 		return this.repository.findAll();
+	}
+	
+	public Collegue findCollegue(String pseudo) throws ServiceException, PseudoInvalideException {
+
+		return this.repository.findByPseudo(pseudo).map(collegueTrouve -> {return collegueTrouve;}).orElseThrow(() -> new PseudoInvalideException());
 	}
 
 }

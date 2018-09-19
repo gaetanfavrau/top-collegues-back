@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.top.controller.view.AvisView;
 import dev.top.controller.view.CollegueView;
+import dev.top.controller.view.DetailsCollegueView;
 import dev.top.entities.Collegue;
 import dev.top.service.CollegueService;
 import dev.top.utils.Converters;
@@ -36,6 +37,13 @@ public class CollegueCtrl {
     public ResponseEntity<List<CollegueView>> listerCollegues() {
 
 	return ResponseEntity.ok(this.service.findAllCollegue().stream().map(col -> Converters.COLLEGUE_TO_COLLEGUE_VIEW.convert(col)).collect(Collectors.toList()));
+
+    }
+    
+    @GetMapping("/{pseudo}")
+    public ResponseEntity<DetailsCollegueView> afficherCollegue(@PathVariable("pseudo") String pseudo) {
+
+	return ResponseEntity.ok(Converters.COLLEGUE_TO_DETAILS_COLLEGUE.convert(this.service.findCollegue(pseudo)));
 
     }
     
