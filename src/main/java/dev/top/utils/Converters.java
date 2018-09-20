@@ -4,7 +4,9 @@ import org.springframework.core.convert.converter.Converter;
 
 import dev.top.controller.view.CollegueView;
 import dev.top.controller.view.DetailsCollegueView;
+import dev.top.entities.Adresse;
 import dev.top.entities.Collegue;
+import dev.top.entities.CollegueSource;
 
 
 public interface Converters {
@@ -20,19 +22,48 @@ public interface Converters {
 	};
 
 	Converter<CollegueView, Collegue> COLLEGUE_VIEW_TO_COLLEGUE = source -> {
-		Collegue collRepo = new Collegue();
+		Collegue collegue = new Collegue();
 
-		collRepo.setPseudo(source.getPseudo());
-		collRepo.setScore(source.getScore());
-		collRepo.setPhoto(source.getPhoto());
+		collegue.setPseudo(source.getPseudo());
+		collegue.setScore(source.getScore());
+		collegue.setPhoto(source.getPhoto());
 
-		return collRepo;
+		return collegue;
 	};
+
+
+	Converter<CollegueSource, Collegue> COLLEGUE_SOURCE_TO_COLLEGUE = source -> {
+		Collegue collegue = new Collegue();
+		
+		collegue.setEmail(source.getEmail());
+		collegue.setNom(source.getNom());
+		collegue.setPrenom(source.getPrenom());
+		collegue.setPhoto(source.getPhoto());
+		collegue.setMatricule(source.getMatricule());
+		
+		String adresseSource = source.getAdresse();
+		String[] splitAdresseComplete = adresseSource.split(",");
+		String[] splitAdresseNumAndLibelle = splitAdresseComplete[0].split(" ");
+		
+		Adresse adresse = new Adresse();
+		
+		adresse.setNumero(Integer.parseInt(splitAdresseNumAndLibelle[0]));
+		adresse.setLibelle(splitAdresseNumAndLibelle[1] + " " + splitAdresseNumAndLibelle[2]);
+		adresse.setVille(splitAdresseComplete[1].trim());
+		adresse.setCodePostal(Integer.parseInt(splitAdresseComplete[2].trim()));
+		
+		collegue.setAdresse(adresse);
+		
+		return collegue;
 	
+	};
+
+
+
 	Converter<Collegue, DetailsCollegueView> COLLEGUE_TO_DETAILS_COLLEGUE = source -> {
-		
+
 		DetailsCollegueView detailsCollegueView = new DetailsCollegueView();
-		
+
 		detailsCollegueView.setAdresse(source.getAdresse());
 		detailsCollegueView.setEmail(source.getEmail());
 		detailsCollegueView.setNom(source.getNom());
@@ -40,9 +71,10 @@ public interface Converters {
 		detailsCollegueView.setPseudo(source.getPseudo());
 		detailsCollegueView.setScore(source.getScore());
 		detailsCollegueView.setPhoto(source.getPhoto());
-		
-		return detailsCollegueView;
- 
-	};
 
+		return detailsCollegueView;
+
+	};
 }
+
+

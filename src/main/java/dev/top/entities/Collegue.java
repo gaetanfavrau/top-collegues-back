@@ -20,11 +20,14 @@ public class Collegue {
     private Adresse adresse;
     private Integer score;
     private String photo;
+    private String matricule;
     
     
-
-	public Collegue(String pseudo, String nom, String prenom, String email, Adresse adresse, Integer score, String photo) {
-
+    
+    
+    public Collegue(String pseudo, String nom, String prenom, String email, Adresse adresse, Integer score,
+			String photo, String matricule) {
+    	
 		this.pseudo = pseudo;
 		this.nom = nom;
 		this.prenom = prenom;
@@ -32,9 +35,19 @@ public class Collegue {
 		this.adresse = adresse;
 		this.score = score;
 		this.photo = photo;
+		this.matricule = matricule;
 	}
-	
+
 	public Collegue() {
+	}	
+	
+	public String getMatricule() {
+		return matricule;
+	}
+
+
+	public void setMatricule(String matricule) {
+		this.matricule = matricule;
 	}
 	
 

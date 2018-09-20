@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.top.controller.view.AvisView;
+import dev.top.controller.view.CollegueFormulaireView;
 import dev.top.controller.view.CollegueView;
 import dev.top.controller.view.DetailsCollegueView;
 import dev.top.entities.Collegue;
@@ -30,29 +31,30 @@ public class CollegueCtrl {
     private CollegueService service;
 
     public CollegueCtrl(CollegueService service) {
-	this.service = service;
+    	this.service = service;
     }
 
     @GetMapping
     public ResponseEntity<List<CollegueView>> listerCollegues() {
 
-	return ResponseEntity.ok(this.service.findAllCollegue().stream().map(col -> Converters.COLLEGUE_TO_COLLEGUE_VIEW.convert(col)).collect(Collectors.toList()));
+    	return ResponseEntity.ok(this.service.findAllCollegue().stream().map(col -> Converters.COLLEGUE_TO_COLLEGUE_VIEW.convert(col)).collect(Collectors.toList()));
 
     }
     
     @GetMapping("/{pseudo}")
     public ResponseEntity<DetailsCollegueView> afficherCollegue(@PathVariable("pseudo") String pseudo) {
 
-	return ResponseEntity.ok(Converters.COLLEGUE_TO_DETAILS_COLLEGUE.convert(this.service.findCollegue(pseudo)));
+    	return ResponseEntity.ok(Converters.COLLEGUE_TO_DETAILS_COLLEGUE.convert(this.service.findCollegue(pseudo)));
 
     }
     
     
 
-    @PostMapping
-    public ResponseEntity<?> creerCollegue(@RequestBody CollegueView collegueView) {
-
-    	this.service.send(Converters.COLLEGUE_VIEW_TO_COLLEGUE.convert(collegueView));
+    @PostMapping("/nouveau")
+    public ResponseEntity<?> creerCollegue(@RequestBody CollegueFormulaireView collegueFormulaireView) {
+    	
+       	this.service.send( this.service.findCollegueByMatriculeFromWebApi(collegueFormulaireView.getMatricule()) );
+    	
     	return ResponseEntity.status(HttpStatus.CREATED).build();
     }
     
@@ -63,9 +65,9 @@ public class CollegueCtrl {
 	    @PathVariable("pseudo") String pseudo) {
 
 		
-	Collegue collegueModifie = this.service.editScore(avisView, pseudo);
+    	Collegue collegueModifie = this.service.editScore(avisView, pseudo);
 
-	return ResponseEntity.ok(Converters.COLLEGUE_TO_COLLEGUE_VIEW.convert(collegueModifie));
+		return ResponseEntity.ok(Converters.COLLEGUE_TO_COLLEGUE_VIEW.convert(collegueModifie));
 
     }
 
