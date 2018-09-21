@@ -6,10 +6,6 @@ public class CollegueFormulaireView {
     private String pseudo;
     private String photo;
 
-    @Override
-    public String toString() {
-	return "CollegueFormulaireView [matricule=" + matricule + ", pseudo=" + pseudo + ", photo=" + photo + "]";
-    }
 
     public CollegueFormulaireView() {
 

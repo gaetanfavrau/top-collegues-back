@@ -28,7 +28,7 @@ public class StartupDataInit {
 	CollegueSource[] list = restTemplate.getForObject("http://collegues-api.cleverapps.io/collegues",
 		CollegueSource[].class);
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 5; i++) {
 
 	    Collegue collegue = Converters.COLLEGUE_SOURCE_TO_COLLEGUE.convert(list[i]);
 	    collegue.setPseudo("Yolo_0" + (i + 1));

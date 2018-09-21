@@ -54,7 +54,7 @@ public class CollegueCtrl {
 	public ResponseEntity<String> creerCollegue(@RequestBody CollegueFormulaireView collegueFormulaireView) {
 
 
-		this.service.send(this.service.findCollegueByMatriculeFromWebApi(collegueFormulaireView.getMatricule()));
+		this.service.send(this.service.findCollegueByMatriculeFromWebApi(collegueFormulaireView));
 
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}

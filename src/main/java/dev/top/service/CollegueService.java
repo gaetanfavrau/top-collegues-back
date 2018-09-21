@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import dev.top.controller.view.AvisView;
+import dev.top.controller.view.CollegueFormulaireView;
 import dev.top.controller.view.CollegueView;
 import dev.top.entities.Avis;
 import dev.top.entities.Collegue;
@@ -69,16 +70,18 @@ public class CollegueService {
 		}).orElseThrow(() -> new PseudoInvalideException());
 	}
 
-	public Collegue findCollegueByMatriculeFromWebApi(String matricule)
+	public Collegue findCollegueByMatriculeFromWebApi(CollegueFormulaireView collegueFormulaireView)
 			throws ServiceException, MatriculeInvalideException {
 
 		RestTemplate restTemplate = new RestTemplate();
 		CollegueSource[] list = restTemplate.getForObject(
-				"http://collegues-api.cleverapps.io/collegues?matricule=" + matricule, CollegueSource[].class);
-		
-
+				"http://collegues-api.cleverapps.io/collegues?matricule=" + collegueFormulaireView.getMatricule(), CollegueSource[].class);
+	
 		if (list.length == 1) {
-			return Converters.COLLEGUE_SOURCE_TO_COLLEGUE.convert(list[0]);
+			Collegue collegue = Converters.COLLEGUE_SOURCE_TO_COLLEGUE.convert(list[0]);
+			collegue.setPseudo(collegueFormulaireView.getPseudo());
+			collegue.setScore(0);
+			return collegue;
 		} else {
 			throw new MatriculeInvalideException();
 		}
