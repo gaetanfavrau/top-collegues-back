@@ -23,50 +23,50 @@ import dev.top.service.CollegueService;
 import dev.top.utils.Converters;
 
 @CrossOrigin // discussion entre deux ports/machines/protocoles différents (ici 4200 <->
-	     // 8080) => cas particulier du Js
+// 8080) => cas particulier du Js
 @RestController() // @Controller + @ResponseBody
 @RequestMapping("/collegues")
 public class CollegueCtrl {
 
-    private CollegueService service;
+	private CollegueService service;
 
-    public CollegueCtrl(CollegueService service) {
-	this.service = service;
-    }
+	public CollegueCtrl(CollegueService service) {
+		this.service = service;
+	}
+	
 
-    @GetMapping
-    public ResponseEntity<List<CollegueView>> listerCollegues() {
+	@GetMapping
+	public ResponseEntity<List<CollegueView>> listerCollegues() {
 
-	return ResponseEntity.ok(this.service.findAllCollegue().stream()
-		.map(col -> Converters.COLLEGUE_TO_COLLEGUE_VIEW.convert(col)).collect(Collectors.toList()));
+		return ResponseEntity.ok(this.service.findAllCollegue().stream()
+				.map(col -> Converters.COLLEGUE_TO_COLLEGUE_VIEW.convert(col)).collect(Collectors.toList()));
 
-    }
+	}
 
-    @GetMapping("/{pseudo}")
-    public ResponseEntity<DetailsCollegueView> afficherCollegue(@PathVariable("pseudo") String pseudo) {
+	@GetMapping("/{pseudo}")
+	public ResponseEntity<DetailsCollegueView> afficherCollegue(@PathVariable("pseudo") String pseudo) {
 
-	return ResponseEntity.ok(Converters.COLLEGUE_TO_DETAILS_COLLEGUE.convert(this.service.findCollegue(pseudo)));
+		return ResponseEntity.ok(Converters.COLLEGUE_TO_DETAILS_COLLEGUE.convert(this.service.findCollegue(pseudo)));
 
-    }
+	}
 
-    @PostMapping("/nouveau")
-    public ResponseEntity<String> creerCollegue(@RequestBody CollegueFormulaireView collegueFormulaireView) {
+	@PostMapping("/nouveau")
+	public ResponseEntity<String> creerCollegue(@RequestBody CollegueFormulaireView collegueFormulaireView) {
 
-	System.out.println(collegueFormulaireView);
 
-	this.service.send(this.service.findCollegueByMatriculeFromWebApi(collegueFormulaireView.getMatricule()));
+		this.service.send(this.service.findCollegueByMatriculeFromWebApi(collegueFormulaireView.getMatricule()));
 
-	return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
 
-    @PatchMapping("/{pseudo}")
-    public ResponseEntity<CollegueView> editeScoreCollegue(@RequestBody AvisView avisView,
-	    @PathVariable("pseudo") String pseudo) {
+	@PatchMapping("/{pseudo}")
+	public ResponseEntity<CollegueView> editeScoreCollegue(@RequestBody AvisView avisView,
+			@PathVariable("pseudo") String pseudo) {
 
-	Collegue collegueModifie = this.service.editScore(avisView, pseudo);
+		Collegue collegueModifie = this.service.editScore(avisView, pseudo);
 
-	return ResponseEntity.ok(Converters.COLLEGUE_TO_COLLEGUE_VIEW.convert(collegueModifie));
+		return ResponseEntity.ok(Converters.COLLEGUE_TO_COLLEGUE_VIEW.convert(collegueModifie));
 
-    }
+	}
 
 }
