@@ -14,33 +14,29 @@ import dev.top.utils.Converters;
 public class StartupDataInit {
 
     private CollegueRepo collegueRepo;
-    
-    public StartupDataInit(CollegueRepo collegueRepo) {
-		super();
-		this.collegueRepo = collegueRepo;
-	}
 
+    public StartupDataInit(CollegueRepo collegueRepo) {
+	super();
+	this.collegueRepo = collegueRepo;
+    }
 
     // méthode appellée dès le lancement de l'application
-	@EventListener(ContextRefreshedEvent.class)
+    @EventListener(ContextRefreshedEvent.class)
     public void init() {
-		
-		//this.collegueRepo.save
-		
-		RestTemplate restTemplate = new RestTemplate();
-		CollegueSource[] list = restTemplate.getForObject("http://collegues-api.cleverapps.io/collegues", CollegueSource[].class);
-		
-		for(int i=0; i<4; i++) {
-			
-			Collegue collegue = Converters.COLLEGUE_SOURCE_TO_COLLEGUE.convert(list[i]);
-			collegue.setPseudo("Yolo_0" + (i+1));
-			collegue.setScore(i*i+6);
-			
-			this.collegueRepo.save(collegue);
-			
-		}
 
-        
+	RestTemplate restTemplate = new RestTemplate();
+	CollegueSource[] list = restTemplate.getForObject("http://collegues-api.cleverapps.io/collegues",
+		CollegueSource[].class);
+
+	for (int i = 0; i < 4; i++) {
+
+	    Collegue collegue = Converters.COLLEGUE_SOURCE_TO_COLLEGUE.convert(list[i]);
+	    collegue.setPseudo("Yolo_0" + (i + 1));
+	    collegue.setScore(i * i + 6);
+
+	    this.collegueRepo.save(collegue);
+
+	}
 
     }
 }
