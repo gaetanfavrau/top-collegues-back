@@ -8,6 +8,8 @@ import dev.top.entities.Collegue;
 
 public interface CollegueRepo extends JpaRepository<Collegue, Integer> {
 
-	Optional<Collegue> findByPseudo(String pseudo);	
-	
+    Optional<Collegue> findByPseudo(String pseudo);
+
+    Collegue findByMatricule(String matricule);
+
 }
